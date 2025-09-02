@@ -26,7 +26,7 @@ struct SearchDetailView: View {
                     store.send(.rootClose)
                 }
 
-                Button("Add") {
+                Button("Open Edit") {
                     store.send(.openEdit)
                 }
             }

@@ -14,7 +14,14 @@ struct SearchView: View {
                         state: SearchStore.Path.State.detail(
                             SearchDetailStore.State(name: currentChar.name, image: currentChar.image ?? "")
                         ), label: {
-                            Text(currentChar.name)
+                            HStack(spacing: 30) {
+                                Image(systemName: "person.circle")
+                                    .resizable()
+                                    .frame(width: 35, height: 35)
+
+                                Text(currentChar.name)
+                            }
+                            .padding()
                         })
                 }
             }
@@ -23,6 +30,7 @@ struct SearchView: View {
             case .detail(let detailStore):
                 SearchDetailView(store: detailStore)
                     .navigationBarBackButtonHidden()
+                    .toolbar(.hidden, for: .tabBar)
             }
         }
         .onAppear {
