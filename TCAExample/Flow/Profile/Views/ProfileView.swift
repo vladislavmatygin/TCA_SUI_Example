@@ -4,7 +4,7 @@ import ComposableArchitecture
 struct ProfileView: View {
     @State private var email: String = ""
 
-    var store: StoreOf<ProfileStore>
+    @Bindable var store: StoreOf<ProfileStore>
 
     var body: some View {
         ScrollView {
@@ -34,7 +34,7 @@ struct ProfileView: View {
 
                 HStack() {
                     Button {
-                        // Action
+                        store.send(.showSettings("settings"))
                     } label: {
                         ZStack {
                             Circle()
@@ -50,7 +50,7 @@ struct ProfileView: View {
 
 
                     Button("Change Name") {
-
+                        store.send(.showChangeName("Vlad"))
                     }
                     .buttonStyle(.borderedProminent)
                 }
@@ -58,6 +58,18 @@ struct ProfileView: View {
             .padding()
         }
         .frame(maxWidth: .infinity)
+        .fullScreenCover(item: $store.scope(
+            state: \.changeName,
+            action: \.changeNameAction
+        )) { store in
+            ChangeNameView(store: store)
+        }
+        .fullScreenCover(item: $store.scope(
+            state: \.profileSettings,
+            action: \.settingsAction
+        )) { store in
+            ProfileSettingsView(store: store)
+        }
     }
 }
 

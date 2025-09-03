@@ -36,5 +36,8 @@ struct SearchView: View {
         .onAppear {
             store.send(.loadedCharacters)
         }
+        .task {
+            await store.send(.loadedCharacters).finish()
+        }
     }
 }
